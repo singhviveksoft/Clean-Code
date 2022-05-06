@@ -22,8 +22,7 @@ class NumberRepoImpl implements NumberRepo {
   Future<Either<Failure, NumberEntities>> getNumber() async {
     if (await connection.isConnection) {
       try {
-        var result =
-            await remoteDataSource.getNumberRemoteDataSource();
+        var result = await remoteDataSource.getNumberRemoteDataSource();
         await localDataSource.cacheNumberLocalDataSource(model: result);
         return Right(result);
       } on ServerException {
@@ -31,8 +30,7 @@ class NumberRepoImpl implements NumberRepo {
       }
     } else {
       try {
-        var result =
-            await localDataSource.getLastNumberLocalDataSource();
+        var result = await localDataSource.getLastNumberLocalDataSource();
         return Right(result);
       } on CatchException {
         return Left(CatchFailure());

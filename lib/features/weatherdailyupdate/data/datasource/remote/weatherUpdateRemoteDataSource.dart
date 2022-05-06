@@ -7,6 +7,9 @@ import 'package:http/http.dart' as http;
 
 abstract class NumberRemoteDataSource {
   Future<NumberModel> getNumberRemoteDataSource();
+
+
+
 }
 
 class NumberRemoteDataSourceImpl implements NumberRemoteDataSource {
