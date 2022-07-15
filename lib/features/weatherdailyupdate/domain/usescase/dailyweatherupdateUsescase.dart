@@ -9,6 +9,10 @@ class NumberUsesCase{
 NumberUsesCase({required this.repo});
 
   Future<Either<Failure, NumberEntities>> execute()async{
+
+
+
+
  return await repo.getNumber();
 
 }

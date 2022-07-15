@@ -1,7 +1,10 @@
-
+import 'package:connectivity/connectivity.dart';
 
 abstract class NetworkConnection {
-  bool get isConnection;
+
+  Future<bool> get isConnection;
+  Future<bool> checkInternet();
+
 }
 
 class NetworkConnectionImpl implements NetworkConnection {
@@ -10,8 +13,18 @@ class NetworkConnectionImpl implements NetworkConnection {
   NetworkConnectionImpl();
 
   @override
-  // TODO: implement isConnection
-  bool get isConnection =>  true;
+  Future<bool> get isConnection =>  checkInternet();
+
+  @override
+  Future<bool> checkInternet() async{
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+    return true;
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      return true;
+    }
+    return false;
+  }
 
 
 }

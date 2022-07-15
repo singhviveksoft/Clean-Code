@@ -1,5 +1,6 @@
 import 'package:clean_code_architecture/features/weatherdailyupdate/data/repoImpl/weatherupdateRepoImpl.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,12 +10,13 @@ import 'core/sharedPref/pref.dart';
 import 'features/weatherdailyupdate/data/datasource/local/weatherUpdateLocalDataSource.dart';
 import 'features/weatherdailyupdate/data/datasource/remote/weatherUpdateRemoteDataSource.dart';
 import 'features/weatherdailyupdate/domain/usescase/dailyweatherupdateUsescase.dart';
+import 'features/weatherdailyupdate/presenatation/bloc/number_status_bloc.dart';
 import 'features/weatherdailyupdate/presenatation/provider/numberProvider.dart';
 
 List<SingleChildWidget> providers = [
   ...independentServices,
   ...dependentServices,
-  ...uiConsumableProviders
+ ...uiConsumableProviders
 ];
 
 List<SingleChildWidget> independentServices = [
@@ -49,13 +51,19 @@ List<SingleChildWidget> dependentServices = [
   }),
 ];
 
-List<SingleChildWidget> uiConsumableProviders = [
-  ChangeNotifierProvider<NumberProvider>(create: (context){
-return NumberProvider(usesCase: Provider.of<NumberUsesCase>(context,listen: false));
-  })
+// List<SingleChildWidget> uiConsumableProviders = [
+//   ChangeNotifierProvider<NumberProvider>(create: (context){
+// return NumberProvider(usesCase: Provider.of<NumberUsesCase>(context,listen: false));
+//   })
 
   /*ListenableProxyProvider<NumberUsesCase, NumberProvider>(
       update: (context, usesCase, _) {
     return NumberProvider(usesCase: usesCase);
   }),*/
+
+List<SingleChildWidget> uiConsumableProviders = [
+  BlocProvider<NumberStatusBloc>(create: (context){
+return NumberStatusBloc(usesCase: Provider.of<NumberUsesCase>(context,listen: false));
+  })
+
 ];
